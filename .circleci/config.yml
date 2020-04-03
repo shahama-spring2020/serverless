@@ -26,7 +26,7 @@ jobs:
           command: |
             pwd
             ls -al
-            zip lambda_function.py requirements.txt
+            zip serverless.zip lambda_function.py requirements.txt
       - run:
           name: Upload Lambda to S3 & update function code from S3
           command: |
