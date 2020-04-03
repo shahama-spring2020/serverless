@@ -1,0 +1,34 @@
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.4
+    working_directory: ~/serverless
+
+    steps:
+      - run:
+          name: Install packages
+          command: |
+            sudo apt-get update
+            sudo apt-get install wget zip unzip -y
+            sudo apt-get install python-dev
+            sudo apt-get install python-pip -y
+      - run:
+          name: Install awscli
+          command: |
+            sudo pip install awscli
+            aws configure set default.region us-east-1
+
+      - run:
+          name: Zip Lambda folder
+          command: |
+            pwd
+            ls -al
+            zip lambda_function.py requirements.txt
+      - run:
+          name: Upload Lambda to S3 & update function code from S3
+          command: |
+            pwd
+            ls -al
+            aws s3 cp serverless.zip s3://${LAMBDA_S3_BUCKET} --sse
