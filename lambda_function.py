@@ -48,7 +48,7 @@ def lambda_handler(event, context):
     if not items:
         print("no similar items")
 
-        ttl=time.time()
+        ttl=time.time()+600
         print(ttl)
         response = table.put_item(
             Item={
