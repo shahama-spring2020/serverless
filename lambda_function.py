@@ -32,23 +32,25 @@ def lambda_handler(event, context):
         KeyConditionExpression=Key('email').eq(emailid)
     )
 
-
+    link_array=[]
     for i in range(len(message)-1):
         index=str(i)
         link='http://prod.amanshah.xyz/v1/bill/'+message[index]
-        link_array=[]
+
         link_array.append(link)
+        print("array of links",link_array)
 
 
 
     csv = ',   '.join([str(elem) for elem in link_array])
+    print("string array csv",csv)
     items = dynamo_row['Items']
 
 
     if not items:
         print("no similar items")
 
-        ttl=time.time()+600
+        ttl=int(time.time()+ 120)
         print(ttl)
         response = table.put_item(
             Item={
@@ -85,10 +87,10 @@ def prepare_and_send_email(recipient, body):
 
 
 
-    # print(AWS_REGION)
+
 
     # Create a new SES resource and specify a region.
-    client = boto3.client('ses',aws_region='us-east-1')
+    client = boto3.client('ses',region_name='us-east-1')
     # Try to send the email.
     CHARSET = "UTF-8"
 
