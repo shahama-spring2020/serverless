@@ -35,7 +35,7 @@ def lambda_handler(event, context):
     link_array=[]
     for i in range(len(message)-1):
         index=str(i)
-        link='http://prod.amanshah.xyz/v1/bill/'+message[index]
+        link='https://prod.amanshah.xyz/v1/bill/'+message[index]
 
         link_array.append(link)
         print("array of links",link_array)
